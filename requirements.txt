@@ -16,6 +16,7 @@ decorator==5.2.1
 defusedxml==0.7.1
 dnspython==2.7.0
 docopt==0.6.2
+dotenv==0.9.9
 email_validator==2.2.0
 executing==2.2.0
 fastjsonschema==2.21.1
@@ -79,8 +80,9 @@ pure_eval==0.2.3
 Pygments==2.19.1
 pyparsing==3.2.3
 python-dateutil==2.9.0.post0
+python-dotenv==1.1.0
 pytz==2025.2
-
+pywin32==310
 pyzmq==26.4.0
 referencing==0.36.2
 requests==2.32.3
@@ -115,3 +117,4 @@ wrapt==1.17.2
 WTForms==3.2.1
 yarg==0.1.9
 gunicorn
+
