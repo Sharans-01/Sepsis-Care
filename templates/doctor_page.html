@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='icon.png') }}">
+  <title>Doctor Profile - SEPSIS CARE</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #e3f2fd;
+      color: #333;
+    }
+
+    .profile-container {
+      display: flex;
+      max-width: 1000px;
+      margin: 50px auto;
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .left-panel {
+      background-color: #0288d1;
+      color: white;
+      padding: 40px 30px;
+      text-align: center;
+      flex: 1;
+    }
+
+    .profile-pic {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid white;
+      margin-bottom: 20px;
+    }
+
+    .right-panel {
+      flex: 2;
+      padding: 40px;
+    }
+
+    .right-panel h1 {
+      font-size: 28px;
+      color: #0288d1;
+      margin-bottom: 30px;
+    }
+
+    .info-section, .password-section {
+      margin-bottom: 30px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px;
+      background-color: #0288d1;
+      color: white;
+      font-weight: bold;
+      border: none;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0277bd;
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-container">
+    <div class="left-panel">
+      <img src="{{ url_for('static', filename='doctor-profile.png') }}" alt="Doctor Profile Picture" class="profile-pic">
+      <h2>Dr. {{ doctor.name }}</h2>
+      <p><strong>Department:</strong> {{ doctor.department }}</p>
+      <p><strong>Specialty:</strong> {{ doctor.specialty }}</p>
+    </div>
+
+    <div class="right-panel">
+      <h1>SEPSIS CARE - Doctor Profile</h1>
+      <div class="info-section">
+        <label>Email Address:</label>
+        <input type="email" value="{{ doctor.email }}" readonly>
+
+        <label>Phone Number:</label>
+        <input type="tel" value="{{ doctor.phone_number }}" readonly>
+
+        <label>Patients Registered:</label>
+        <input type="number" value="{{ patients_registered }}" readonly>
+      </div>
+
+      <div class="password-section">
+        <h2>Change Password</h2>
+        <form method="POST">
+          {{ form.hidden_tag() }}
+          <label>{{ form.old_password.label }}</label>
+          {{ form.old_password() }}
+
+          <label>{{ form.new_password.label }}</label>
+          {{ form.new_password() }}
+
+          <label>{{ form.confirm_password.label }}</label>
+          {{ form.confirm_password() }}
+
+          {{ form.submit() }}
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

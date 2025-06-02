@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register - SEPSIS CARE</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='icon.png') }}">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #e1f5fe, #b3e5fc);
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .form-container {
+      background-color: #fff;
+      border-radius: 16px;
+      padding: 40px;
+      max-width: 550px;
+      width: 100%;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+      animation: slideFade 0.6s ease-in-out;
+    }
+
+    @keyframes slideFade {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .branding {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 25px;
+    }
+
+    .branding img {
+      height: 40px;
+      margin-right: 12px;
+    }
+
+    .branding h2 {
+      color: #0288d1;
+      font-size: 28px;
+      margin: 0;
+      font-weight: 700;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-top: 15px;
+      color: #555;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      transition: border-color 0.3s;
+    }
+
+    input:focus, select:focus {
+      border-color: #0288d1;
+      outline: none;
+    }
+
+ 
+    .btn {
+  width: 100%;
+  margin-top: 30px;
+  padding: 12px;
+  background-color: #0288d1;
+  color: white;
+  font-weight: bold;
+  border: none;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #0277bd;
+}
+
+
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    @media (max-width: 600px) {
+      .form-container {
+        padding: 30px 20px;
+      }
+
+      .branding h2 {
+        font-size: 22px;
+      }
+
+      .branding img {
+        height: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <div class="branding">
+      <img src="{{ url_for('static', filename='icon.png') }}" alt="Logo">
+      <h2>Sepsis Care - Register</h2>
+    </div>
+
+    <form method="POST">
+      {{ form.hidden_tag() }}
+
+      <label>{{ form.name.label }}</label>
+      {{ form.name() }}
+      {% for error in form.name.errors %}
+        <div class="error">{{ error }}</div>
+      {% endfor %}
+
+      <label>{{ form.email.label }}</label>
+      {{ form.email() }}
+      {% for error in form.email.errors %}
+        <div class="error">{{ error }}</div>
+      {% endfor %}
+
+      <label>{{ form.department.label }}</label>
+      {{ form.department() }}
+      {% for error in form.department.errors %}
+        <div class="error">{{ error }}</div>
+      {% endfor %}
+
+      <label>{{ form.phone_number.label }}</label>
+      {{ form.phone_number() }}
+      {% for error in form.phone_number.errors %}
+        <div class="error">{{ error }}</div>
+      {% endfor %}
+
+      <label>{{ form.password.label }}</label>
+      {{ form.password() }}
+      {% for error in form.password.errors %}
+        <div class="error">{{ error }}</div>
+      {% endfor %}
+
+      <label>{{ form.confirm_password.label }}</label>
+      {{ form.confirm_password() }}
+      {% for error in form.confirm_password.errors %}
+        <div class="error">{{ error }}</div>
+      {% endfor %}
+
+      {{ form.submit(class_="btn") }}
+    </form>
+  </div>
+</body>
+</html>

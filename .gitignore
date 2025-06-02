@@ -1,0 +1,16 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Environment files
+.env
+
+# Virtual environment folder
+Sepsisvenv
+main.py
+
+
+
+
+# Render deploy file (optional if sensitive info)
+render.yaml

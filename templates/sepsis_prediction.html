@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='icon.png') }}">
+  <title>Sepsis Prediction - SEPSIS CARE</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #e3f2fd;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 40px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #0288d1;
+      margin-bottom: 30px;
+      font-size: 28px;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+    label {
+      display: flex;
+      flex-direction: column;
+      font-weight: 600;
+      color: #01579b;
+    }
+    input {
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #90caf9;
+      border-radius: 8px;
+      background-color: #f1faff;
+      font-size: 14px;
+    }
+    .submit-btn {
+      margin-top: 30px;
+      display: block;
+      width: 100%;
+      padding: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      background-color: #0288d1;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+    .submit-btn:hover {
+      background-color: #0277bd;
+    }
+    .result-box {
+      margin-top: 40px;
+      padding: 20px;
+      background-color: #b3e5fc;
+      border-radius: 12px;
+      text-align: center;
+      color: #01579b;
+      font-weight: bold;
+    }
+
+     .back-button {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  text-decoration: none;
+  background-color: #0288d1;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.back-button:hover {
+  background-color: #0277bd;
+}
+  </style>
+</head>
+<body>
+  <a href="{{ url_for('dashboard') }}" class="back-button">← Back to Dashboard</a>
+
+  <div class="container">
+    <h1>🧬 Sepsis Prediction Form</h1>
+    <form method="POST" action="/sepsis_predict">
+      <div class="form-grid">
+  <label>Patient Name: <input type="text" name="Patient Name" required></label>
+  
+  <label>Heart Rate (HR): 
+    <input type="number" name="HR" step="any" placeholder="20 - 223 bpm" required>
+  </label>
+  
+  <label>Temperature (Temp): 
+    <input type="number" name="Temp" step="any" placeholder="23 - 41 °C" required>
+  </label>
+  
+  <label>Respiratory Rate (Resp): 
+    <input type="number" name="Resp" step="any" placeholder="1 - 67 breaths/min" required>
+  </label>
+  
+  <label>Oxygen Saturation (O2Sat): 
+    <input type="number" name="O2Sat" step="any" placeholder="20 - 100 %" required>
+  </label>
+  
+  <label>Systolic BP (SBP): 
+    <input type="number" name="SBP" step="any" placeholder="29 - 274 mmHg" required>
+  </label>
+  
+  <label>Mean Arterial Pressure (MAP): 
+    <input type="number" name="MAP" step="any" placeholder="20 - 293 mmHg" required>
+  </label>
+  
+  <label>Diastolic BP (DBP): 
+    <input type="number" name="DBP" step="any" placeholder="20 - 246 mmHg" required>
+  </label>
+  
+  <label>White Blood Cell Count (WBC): 
+    <input type="number" name="WBC" step="any" placeholder="0.10 - 222 x10⁹/L" required>
+  </label>
+  
+  <label>Lactate: 
+    <input type="number" name="Lactate" step="any" placeholder="0.40 - 24 mmol/L" required>
+  </label>
+  
+  <label>Creatinine: 
+    <input type="number" name="Creatinine" step="any" placeholder="0.10 - 15 mg/dL" required>
+  </label>
+  
+  <label>BUN: 
+    <input type="number" name="BUN" step="any" placeholder="1 - 170 mg/dL" required>
+  </label>
+  
+  <label>Platelets: 
+    <input type="number" name="Platelets" step="any" placeholder="5 - 1783 x10⁹/L" required>
+  </label>
+  
+  <label>Glucose: 
+    <input type="number" name="Glucose" step="any" placeholder="28 - 914 mg/dL" required>
+  </label>
+  
+  <label>pH: 
+    <input type="number" name="pH" step="any" placeholder="6.65 - 7.63" required>
+  </label>
+  
+  <label>HCO3: 
+    <input type="number" name="HCO3" step="any" placeholder="5 - 52 mEq/L" required>
+  </label>
+  
+  <label>PaCO2: 
+    <input type="number" name="PaCO2" step="any" placeholder="14 - 100 mmHg" required>
+  </label>
+  
+  <label>FiO2: 
+    <input type="number" name="FiO2" step="any" placeholder="0 - 10 %" required>
+  </label>
+  
+  <label>PTT: 
+    <input type="number" name="PTT" step="any" placeholder="17 - 150 seconds" required>
+  </label>
+  
+  <label>Fibrinogen: 
+    <input type="number" name="Fibrinogen" step="any" placeholder="50 - 1246 mg/dL" required>
+  </label>
+  
+  <label>Age: 
+    <input type="number" name="Age" step="any" placeholder="18 - 88 years" required>
+  </label>
+  
+  <label>Gender (1=Male, 0=Female): 
+    <input type="number" name="Gender" min="0" max="1" placeholder="0 or 1" required>
+  </label>
+</div>
+
+<button type="submit" class="submit-btn">🔍 Predict Sepsis</button>
+
+
+   {% if label %}
+  <style>
+    .result-box {
+      background: #ffffff;
+      border-left: 10px solid #4caf50;
+      border-radius: 10px;
+      padding: 25px 30px;
+      margin: 40px auto;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      max-width: 900px;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .result-box h2 {
+      font-size: 26px;
+      margin-bottom: 15px;
+      color: #2e7d32;
+    }
+
+    .result-box p {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    .stage-details {
+      white-space: pre-wrap;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 16px;
+      line-height: 1.6;
+      text-align: justify;
+      color: #333;
+      background-color: #f9f9f9;
+      border-left: 6px solid;
+    }
+
+    /* Stage color logic */
+    .stage-initial {
+      border-color: #1976d2;
+      background-color: #e3f2fd;
+    }
+
+    .stage-severe {
+      border-color: #f9a825;
+      background-color: #fff8e1;
+    }
+
+    .stage-shock {
+      border-color: #d32f2f;
+      background-color: #ffebee;
+    }
+
+    .stage-none {
+      border-color: #2e7d32;
+      background-color: #e8f5e9;
+    }
+  </style>
+
+  <div class="result-box">
+    <h2>🩺 PREDICTION RESULT</h2>
+    <p style="font-size: 22px; font-weight: bold; color: #2c3e50;">
+  <strong>Prediction :</strong> {{ label }}
+</p>
+
+    <p><strong>Stage Details:</strong></p>
+    <div class="stage-details
+      {% if 'Stage 1' in label %}stage-initial{% elif 'Stage 2' in label %}stage-severe
+      {% elif 'Stage 3' in label %}stage-shock{% else %}stage-none{% endif %}">
+      {{ stage_details | safe }}
+    </div>
+  </div>
+{% endif %}
+
+  </div>
+</body>
+</html>

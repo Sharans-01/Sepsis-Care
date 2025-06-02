@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='icon.png') }}">
+  <title>Download Patient Reports</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f1f8ff;
+      margin: 0;
+      padding: 0;
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 40px;
+      color: #01579b;
+      font-size: 28px;
+    }
+
+    table {
+      width: 90%;
+      margin: 40px auto;
+      border-collapse: collapse;
+      background-color: #fff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 16px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+      font-size: 16px;
+    }
+
+    th {
+      background-color: #0288d1;
+      color: white;
+      font-weight: 600;
+    }
+
+    tr:hover {
+      background-color: #f1faff;
+    }
+
+    .download-link {
+      background-color: #0288d1;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background-color 0.3s;
+    }
+
+    .download-link:hover {
+      background-color: #0277bd;
+    }
+
+    @media (max-width: 768px) {
+      table {
+        width: 100%;
+      }
+
+      th, td {
+        padding: 12px;
+        font-size: 14px;
+      }
+
+      .download-link {
+        padding: 6px 12px;
+      }
+    }
+
+     .back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  text-decoration: none;
+  background-color: #0288d1;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.back-button:hover {
+  background-color: #0277bd;
+}
+  </style>
+</head>
+<body>
+  <a href="{{ url_for('dashboard') }}" class="back-button">← Back to Dashboard</a>
+
+  <h2>Patient Report Download</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Phone</th>
+        <th>Download Link</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for patient in patients %}
+      <tr>
+        <td>{{ patient.name }}</td>
+        <td>{{ patient.age }}</td>
+        <td>{{ patient.phone }}</td>
+        <td>
+          <a class="download-link" href="{{ url_for('download_report', patient_name=patient.name) }}">Download</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>

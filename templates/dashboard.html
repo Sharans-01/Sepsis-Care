@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='icon.png') }}">
+  <title>Doctor Dashboard - SEPSIS CARE</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #e3f2fd);
+      color: #333;
+    }
+
+    
+
+    main {
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    main h2 {
+      font-size: 30px;
+      color: #01579b;
+      margin-bottom: 50px;
+      font-weight: bold;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 30px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 35px 25px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      text-decoration: none;
+      font-size: 20px;
+      font-weight: 600;
+      color: #0277bd;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+      background-color: #e1f5fe;
+    }
+
+    .card::after {
+      content: "→";
+      font-size: 22px;
+      margin-top: 10px;
+      color: #01579b;
+    }
+
+    /* Toast Notification Style */
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #0288d1;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      font-size: 16px;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      z-index: 9999;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .toast.hide {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 22px;
+      }
+
+      header button {
+        padding: 8px 16px;
+        font-size: 14px;
+      }
+
+      main h2 {
+        font-size: 22px;
+      }
+
+      .card {
+        font-size: 18px;
+        padding: 25px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  {% include 'navbar.html' %}
+
+  <main>
+    <h2>Welcome, Dr. {{ doctor.name|upper }}</h2>
+    <div class="card-grid">
+      <a href="{{ url_for('patient_entry') }}" class="card">➕ Add Patient</a>
+      <a href="{{ url_for('sepsis_predict') }}" class="card">🧪 Sepsis Prediction</a>
+      <a href="{{ url_for('patient_history') }}" class="card">📁 Patient History</a>
+      <a href="{{ url_for('all_doctors') }}" class="card">👩‍⚕️ Doctor Profile</a>
+      <a href="{{ url_for('download_patient_report') }}" class="card">📥 Download Report</a>
+    </div>
+  </main>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">Welcome Dr. {{ doctor.name }}!</div>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const toast = document.getElementById("toast");
+    if (toast) {
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 4000); // hide after 4 seconds
+    }
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+  <title>SEPSIS CARE - Home</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
+
+    .hero {
+      background: url('{{ url_for('static', filename='home_page.jpeg') }}') no-repeat center center/cover;
+      height: 100vh;
+      position: relative;
+    }
+
+    .overlay {
+      background: linear-gradient(to bottom right, rgba(0, 0, 50, 0.6), rgba(0, 80, 120, 0.6));
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .content {
+      max-width: 800px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+      padding: 50px 40px;
+      text-align: center;
+      animation: fadeIn 1.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .content h1 {
+      color: #ffffff;
+      font-size: 40px;
+      font-family: 'Roboto Slab', sans-serif;
+      margin-bottom: 20px;
+    }
+
+    .content p {
+      font-size: 18px;
+      color: #e0f7fa;
+      line-height: 1.7;
+    }
+
+    .highlight {
+      color: #ffeb3b;
+      font-weight: bold;
+    }
+
+    .login-btn {
+      display: inline-block;
+      margin-top: 35px;
+      padding: 14px 28px;
+      background-color: #03a9f4;
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .login-btn:hover {
+      background-color: #0288d1;
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 600px) {
+      .content {
+        padding: 30px 20px;
+      }
+
+      .content h1 {
+        font-size: 30px;
+      }
+
+      .content p {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="overlay">
+      <div class="content">
+        <h1>Welcome to SEPSIS CARE</h1>
+        <p>
+          <span class="highlight">SEPSIS CARE</span> is an AI-powered healthcare solution designed to assist doctors in early identification of sepsis. 
+          Using an advanced <span class="highlight">Deep Learning (MLP) model</span>, the platform analyzes real-time patient vitals and lab results to provide 
+          accurate predictions on sepsis onset.
+        </p>
+        <p style="margin-top: 15px;">
+          Empower your medical decisions with <span class="highlight">predictive intelligence</span> and improve patient outcomes through timely interventions.
+        </p>
+        <a href="{{ url_for('login') }}" class="login-btn">Login to Continue</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

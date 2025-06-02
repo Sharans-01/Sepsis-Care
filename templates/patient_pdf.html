@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='icon.png') }}">
+  <title>Sepsis Prediction Report</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4faff;
+      padding: 40px;
+      margin: 0;
+      color: #2c3e50;
+    }
+
+    h1, h2 {
+      font-family: 'Roboto Slab', sans-serif;
+      text-align: center;
+      color: #01579b;
+      margin-bottom: 20px;
+    }
+
+    .report-container {
+      max-width: 950px;
+      margin: auto;
+      background-color: #ffffff;
+      padding: 40px 50px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .section {
+      
+      display: flex;
+      flex-wrap: wrap;
+      
+      margin-bottom: 15px;
+    }
+
+    .label {
+      font-weight: 600;
+      font-size: 18px;
+       font-family: 'Times New Roman', sans-serif;
+      width: 280px;
+      margin-bottom: 5px;
+      color: #000000;
+    }
+
+    .value {
+      flex: 1;
+      font-size: 18px;
+      font-weight: 500;
+      font-family: 'poppins', sans-serif;
+      margin-bottom: 5px;
+      color: #455a64;
+    }
+
+    pre {
+      margin: 0;
+      font-family: inherit;
+      background: #e3f2fd;
+      padding: 10px;
+      border-radius: 6px;
+    }
+
+    hr {
+      margin: 35px 0;
+      border: none;
+      border-top: 1px solid #ccc;
+    }
+
+    @media (max-width: 768px) {
+      .label {
+        width: 100%;
+      }
+
+      .section {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+
+ <div class="report-container">
+
+  <!-- Flex container for logo and heading -->
+  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px;">
+    <!-- Logo on the left -->
+    <img src="file:///{{ logo_path }}" alt="SepsisCare Logo" style="max-width: 180px; height: auto;">
+
+    <!-- Heading on the right -->
+    <h1 style="flex: 1; text-align: center; color: #0277bd; margin-left: 20px; margin-top: -90px;">SEPSIS PREDICTION REPORT</h1>
+  </div>
+
+
+    <h2>Patient Information</h2>
+    <div class="section"><span class="label">Patient ID: </span><span class="value">{{ patient.user_id }}</span></div>
+    <div class="section"><span class="label">Name: </span><span class="value">{{ patient.patient_name }}</span></div>
+    <div class="section"><span class="label">Age: </span><span class="value">{{ patient.age }}</span></div>
+    <div class="section">
+  <span class="label">Gender: </span>
+  <span class="value">
+    {% if patient.gender == 1 %}
+      Male
+    {% elif patient.gender == 0 %}
+      Female
+    {% else %}
+      Unknown
+    {% endif %}
+  </span>
+</div>
+
+   <hr>
+<h2>Vitals & Lab Readings</h2>
+
+<div class="section"><span class="label">Heart Rate (HR)              :</span><span class="value">  {{ patient.hr }} bpm</span></div>
+<div class="section"><span class="label">Temperature (Temp)           :</span><span class="value">  {{ patient.temp }} °C</span></div>
+<div class="section"><span class="label">Respiration Rate (Resp)      :</span><span class="value">  {{ patient.resp }} breaths/min</span></div>
+<div class="section"><span class="label">Oxygen Saturation (O2Sat)    :</span><span class="value">  {{ patient.o2sat }} %</span></div>
+<div class="section"><span class="label">Systolic BP (SBP)            :</span><span class="value">  {{ patient.sbp }} mmHg</span></div>
+<div class="section"><span class="label">Mean Arterial Pressure (MAP) :</span><span class="value">  {{ patient.map_ }} mmHg</span></div>
+<div class="section"><span class="label">Diastolic BP (DBP)           :</span><span class="value">  {{ patient.dbp }} mmHg</span></div>
+<div class="section"><span class="label">WBC Count                    :</span><span class="value">  {{ patient.wbc }} x10⁹/L</span></div>
+<div class="section"><span class="label">Lactate                      :</span><span class="value">  {{ patient.lactate }} mmol/L</span></div>
+<div class="section"><span class="label">Creatinine                   :</span><span class="value">  {{ patient.creatinine }} mg/dL</span></div>
+<div class="section"><span class="label">BUN                          :</span><span class="value">  {{ patient.bun }} mg/dL</span></div>
+<div class="section"><span class="label">Platelets                    :</span><span class="value">  {{ patient.platelets }} x10⁹/L</span></div>
+<div class="section"><span class="label">Glucose                      :</span><span class="value">  {{ patient.glucose }} mg/dL</span></div>
+<div class="section"><span class="label">pH                           :</span><span class="value">  {{ patient.ph }}</span></div>
+<div class="section"><span class="label">HCO3                         :</span><span class="value">  {{ patient.hco3 }} mmol/L</span></div>
+<div class="section"><span class="label">PaCO2                        :</span><span class="value">  {{ patient.paco2 }} mmHg</span></div>
+<div class="section"><span class="label">FiO2                         :</span><span class="value">  {{ patient.fio2 }} %</span></div>
+<div class="section"><span class="label">PTT                          :</span><span class="value">  {{ patient.ptt }} seconds</span></div>
+<div class="section"><span class="label">Fibrinogen                   :</span><span class="value">  {{ patient.fibrinogen }} mg/dL</span></div>
+    <hr>
+    <br>
+
+    <h2>Prediction Summary</h2>
+    <div class="section"><span class="label">Prediction Result: </span><span class="value">{{ patient.prediction_result }}</span></div>
+    <div class="section">
+  <span class="label">Sepsis Probability: </span>
+  <span class="value">{{ (patient.sepsis_probability * 100) | round(2) }}%</span>
+</div>
+    <div class="section"><span class="label"></span><span class="value"><div class="value">{{ patient.stage_message.replace('\n', '<br>') | safe }}</div>
+</span></div>
+    
+
+ 
+
+   
+
+<div style="text-align: center; margin-top: 40px; font-style: italic; color: #555;">
+  “Early detection saves lives — Together, let’s beat sepsis.”
+</div>
+
+</body>
+</html>

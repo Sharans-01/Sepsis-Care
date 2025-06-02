@@ -1,0 +1,174 @@
+<!-- templates/partials/navbar.html -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+   header {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #045de9, #09c6f9);
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+
+  body {
+    padding-top: 80px; /* Adjust based on header height */
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .doctor-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid white;
+    object-fit: cover;
+  }
+
+  header h1 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  .center-nav {
+    display: flex;
+    gap: 35px;
+    align-items: center;
+  }
+
+  .nav-link {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    transition: background 0.3s ease, transform 0.2s;
+  }
+
+  .nav-link:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1.05);
+  }
+
+  .nav-link.active {
+    background-color: white;
+    color: #0288d1;
+    font-weight: 600;
+  }
+
+  header button {
+    background-color: white;
+    color: #0288d1;
+    border: none;
+    padding: 10px 20px;
+    font-weight: 600;
+    font-size: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  header button:hover {
+    background-color: #e0f7fa;
+    color: #01579b;
+    transform: scale(1.05);
+  }
+
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+  }
+
+  .menu-toggle span {
+    height: 3px;
+    width: 25px;
+    background: white;
+    border-radius: 2px;
+  }
+
+  @media (max-width: 768px) {
+    .center-nav {
+      display: none;
+      flex-direction: column;
+      background: #0288d1;
+      width: 100%;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      padding: 15px 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .center-nav.show {
+      display: flex;
+    }
+
+    .menu-toggle {
+      display: flex;
+    }
+
+    header {
+      flex-wrap: wrap;
+    }
+
+    .header-left {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    header form {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 10px;
+    }
+  }
+</style>
+
+<header>
+  <div class="header-left">
+    <div style="display: flex; align-items: center; gap: 15px;">
+      <img src="{{ url_for('static', filename='logo1.jpg') }}" alt="Doctor" class="doctor-icon">
+      <h1>SEPSIS CARE</h1>
+    </div>
+
+    <div class="menu-toggle" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
+  <nav class="center-nav" id="navMenu">
+    <a href="{{ url_for('home') }}" class="nav-link {% if request.endpoint == 'home' %}active{% endif %}">Home</a>
+    <a href="{{ url_for('dashboard') }}" class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}">Dashboard</a>
+    <a href="{{ url_for('home') }}#services" class="nav-link">Services</a>
+    <a href="{{ url_for('home') }}#contact" class="nav-link">Contact Us</a>
+  </nav>
+
+  <form action="{{ url_for('logout') }}" method="POST" style="margin: 0;">
+    <button type="submit">Logout</button>
+  </form>
+</header>
+
+<script>
+  function toggleMenu() {
+    const nav = document.getElementById('navMenu');
+    nav.classList.toggle('show');
+  }
+</script>

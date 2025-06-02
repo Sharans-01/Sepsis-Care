@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='icon.png') }}">
+  <title>Patient Entry - SEPSIS CARE</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #e3f2fd;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #0288d1;
+      font-size: 28px;
+      margin-bottom: 30px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    fieldset {
+      border: 2px solid #0288d1;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+
+    legend {
+      font-weight: bold;
+      color: #0288d1;
+      padding: 0 10px;
+      font-size: 18px;
+    }
+
+    label {
+      margin-top: 15px;
+      font-weight: bold;
+      display: block;
+    }
+
+    input, select, textarea {
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 5px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 14px;
+      background-color: #0288d1;
+      color: white;
+      font-weight: bold;
+      border: none;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0277bd;
+    }
+
+    .toast {
+      visibility: hidden;
+      min-width: 250px;
+      background-color: #4caf50; /* green */
+      color: white;
+      text-align: center;
+      border-radius: 8px;
+      padding: 16px;
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      font-size: 16px;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+      transition: visibility 0s, opacity 0.5s ease-in-out;
+      opacity: 0;
+    }
+
+    .toast.show {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  text-decoration: none;
+  background-color: #0288d1;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.back-button:hover {
+  background-color: #0277bd;
+}
+
+  </style>
+</head>
+<body>
+<a href="{{ url_for('dashboard') }}" class="back-button">← Back to Dashboard</a>
+
+  <div class="container">
+    <h1>SEPSIS CARE - Patient Data Entry</h1>
+
+    <form method="POST">
+      <fieldset>
+        <legend>Personal Details</legend>
+
+        <label for="name">Patient Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required>
+
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" required>
+
+        <label for="ward">Ward No:</label>
+        <input type="text" id="ward" name="ward" required>
+
+        <label for="attendee">Attendee Phone No:</label>
+        <input type="tel" id="attendee" name="attendee" required>
+
+        <label for="address">Address:</label>
+        <textarea id="address" name="address" rows="2" required></textarea>
+
+        <label for="sex">Gender:</label>
+        <select id="sex" name="sex" required>
+          <option value="">Select</option>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+        </select>
+
+        <label for="consultant">Consultant Doctor Name:</label>
+        <input type="text" id="consultant" name="consultant" required>
+
+        <label for="admission">Admission Date:</label>
+        <input type="date" id="admission" name="admission" required>
+      </fieldset>
+
+      <fieldset>
+        <legend>Condition Details (Sepsis Related)</legend>
+
+        <label for="blood">Blood Sample Report:</label>
+        <textarea id="blood" name="blood" rows="3" placeholder="Hemoglobin, WBC, Platelets, etc." required></textarea>
+
+        <label for="timeseries">Time Series Samples:</label>
+        <textarea id="timeseries" name="timeseries" rows="3" placeholder="Vitals over time: Temp, BP, HR, etc." required></textarea>
+
+        <label for="additional">Additional Observations:</label>
+        <textarea id="additional" name="additional" rows="3" placeholder="Nursing notes, infection markers, etc."></textarea>
+      </fieldset>
+
+      <button type="submit">Submit Patient Details</button>
+    </form>
+  </div>
+
+  <!-- Toast element -->
+  <div id="toast" class="toast"></div>
+
+  <!-- Toast logic -->
+  <script>
+    function showToast(message, isSuccess = true) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.style.backgroundColor = isSuccess ? "#4caf50" : "#f44336"; // green or red
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3000);
+    }
+  </script>
+
+  <!-- Display flash messages as toast -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <script>
+        window.addEventListener('DOMContentLoaded', () => {
+          {% for category, message in messages %}
+            showToast("{{ message }}", {{ 'true' if category == 'success' else 'false' }});
+          {% endfor %}
+        });
+      </script>
+    {% endif %}
+  {% endwith %}
+
+</body>
+</html>
