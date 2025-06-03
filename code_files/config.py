@@ -1,9 +1,6 @@
 import os
-from dotenv import load_dotenv
-
-load_dotenv()  # Load values from .env file
 
 class Config:
-    SECRET_KEY = os.getenv('SECRET_KEY')
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
+    SECRET_KEY = os.environ.get('SECRET_KEY', 'dev_key_for_local')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'sqlite:///local.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
