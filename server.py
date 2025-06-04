@@ -21,6 +21,10 @@ app.config.from_object(Config)
 
 db = SQLAlchemy(app)
 
+@app.before_first_request
+def create_tables():
+    db.create_all()
+
 # Load the trained model_1
 model = load_model('model/MLP_model.h5')
 scaler = joblib.load('model/Scaler.pkl')
